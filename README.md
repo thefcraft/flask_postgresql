@@ -12,6 +12,28 @@ pip install flask-pgsql --user
 
 ## Usage
 
+### Works on existing code
+
+```python
+from flask_sqlalchemy import SQLAlchemy
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'database\\database.db')
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+db = SQLAlchemy(app) # Creating an SQLAlchemy instance
+...
+if __name__ == "__main__":
+    if RESET:
+        with app.app_context(): db.create_all()
+```
+replace it by
+```python
+from flask_postgresql import PostgreSQL
+db = PostgreSQL(hostname=hostname, port=port, database=database, username=username, password=password)
+...
+if __name__ == "__main__":
+    if RESET:
+        db.create_all() # with app.app_context(): db.create_all() will also work
+```
+
 ### Initializing the Database Connection
 
 To initialize the PostgreSQL connection, import the `PostgreSQL` class from `flask_postgresql` and provide the necessary connection parameters:
@@ -57,7 +79,6 @@ class USERS(db.Model):
         return f"{self.id}). Name : {self.userName}, userDescription: {self.userDescription}, userPNG: {self.userPNG}, userFollowers: {self.userFollowers}"
 ```
 
-
 ### Creating Tables
 
 Create database tables using the `create_all()` method:
@@ -97,6 +118,9 @@ user_to_delete = USERS.query.get(id)
 user_to_delete.delete()
 db.session.commit()
 ```
+
+### Compatibility 
+While the Flask PostgreSQL library is designed for Flask applications, it can also be used in other frameworks or standalone Python scripts that require PostgreSQL database integration.
 
 ## Contributing
 
