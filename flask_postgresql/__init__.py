@@ -96,7 +96,12 @@ class PostgreSQL:
     def Integer(self): ...
     def String(self, length:int=0): return BaseType(f'string({length})')
     def Date(self): ...
-    def create_all(self): ...
+    def create_all(self): 
+        """
+        Create all tables defined by model classes.
+        """
+        for cls in self.Model.__subclasses__():
+            cls.create()
 
 
 if __name__ == '__main__':
