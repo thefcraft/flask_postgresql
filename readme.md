@@ -7,7 +7,7 @@ A PostgreSQL library for Flask inspired by Flask-SQLAlchemy. This library provid
 You can install the library using pip:
 
 ```
-pip install flask-pgsql
+pip install flask-pgsql --user
 ```
 
 ## Usage
