@@ -1,4 +1,4 @@
-name: Upload Python Package flask_postgresql
+name: Upload Python Package flask_postgresql or flask_pgsql
 
 on:
   workflow_dispatch:
