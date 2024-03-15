@@ -63,9 +63,10 @@ class USERS(db.Model):
 Create database tables using the `create_all()` method:
 
 ```python
-# db.create_all() # not working yet but you can use
-USERS.create()
-BLOGS.create()
+db.create_all()
+# or you can recreate any special table
+# USERS.create()
+# BLOGS.create()
 ```
 
 ### Querying Data
