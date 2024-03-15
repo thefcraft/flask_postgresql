@@ -102,7 +102,7 @@ class PostgreSQL:
         """
         for cls in self.Model.__subclasses__():
             cls.create()
-
+        self.session.commit()
 
 if __name__ == '__main__':
     # app = Flask(__name__)
