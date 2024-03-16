@@ -90,7 +90,7 @@ class PostgreSQL:
                 # i[1][1] => false
                 cur = selfRoot.conn.cursor()
                 cur.execute(f'DROP TABLE IF EXISTS {cls.__name__};')
-                call = ','.join(['id serial PRIMARY KEY']+[f"{i[0]} {i[1][0].replace('LargeBinary', 'bytea').replace('BigInteger', 'bigint').replace('DateTime', 'date').lower()}{' UNIQUE' if (i[1][3]) else ''}{'' if (i[1][2] or i[1][4]!=None) else ' NOT NULL'}{'' if i[1][4]==None else ' DEFAULT '+str(i[1][4])}" for i in attributes if i[0]!='id'])
+                call = ','.join(['id serial PRIMARY KEY']+[f"{i[0]} {i[1][0].replace('LargeBinary', 'bytea').replace('BigInteger', 'bigint').replace('DateTime', 'date').lower()}{' []' if i[1][5] else ''}{' UNIQUE' if (i[1][3]) else ''}{'' if (i[1][2] or i[1][4]!=None) else ' NOT NULL'}{'' if i[1][4]==None else ' DEFAULT '+str(i[1][4])}" for i in attributes if i[0]!='id'])
                 cur.execute(f'CREATE TABLE {cls.__name__} ({call});')
                 cur.close()
                 
@@ -110,8 +110,8 @@ class PostgreSQL:
         selfRoot.Model = BaseModel
         selfRoot.func = BaseFunc
     
-    def Column(self, data_type, primary_key=False, nullable=True, unique=False, default=None):
-        return (data_type.__name__,primary_key,nullable,unique,default)
+    def Column(self, data_type, primary_key=False, nullable=True, unique=False, default=None, array=False):
+        return (data_type.__name__,primary_key,nullable,unique,default, array)
     def Integer(self): ...
     def String(self, length:int=0): return BaseType(f'varchar({length})')
     def Text(self): ...
