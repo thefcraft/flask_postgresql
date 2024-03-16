@@ -10,6 +10,21 @@ You can install the Flask PostgreSQL library using pip:
 pip install flask-pgsql --user
 ```
 
+## TODO
+Class properties are deprecated in Python 3.11 and will not be supported in Python 3.13
+```python
+class BaseModel:
+    ...
+    @classmethod
+    @property # Class properties are deprecated in Python 3.11 and will not be supported in Python 3.13
+    def query(cls): ...
+```
+Do somethig like this.
+```python
+class MetaModel(type): ...
+class BaseModel(metaclass=MetaModel): ...
+```
+
 ## Usage
 
 ### Works on existing code
