@@ -63,20 +63,24 @@ class BLOGS(db.Model):
     user_id = db.Column(db.Integer, nullable=False)
     title = db.Column(db.String(100), nullable=False)
     description = db.Column(db.String(200), nullable=True)
-    data = db.Column(db.String, nullable=False)
+    data = db.Column(db.Text, nullable=False)
 
     def __repr__(self):
         return f"{self.id}). Name : {self.user_id}, title: {self.title}, description: {self.description}, data: {self.data}"
 
 class USERS(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    userName = db.Column(db.String(20), nullable=False)
-    userDescription = db.Column(db.String(300), nullable=False)
-    userPNG = db.Column(db.String(50), nullable=False)
-    userFollowers = db.Column(db.Integer, nullable=False)
+    username = db.Column(db.String(80), unique=True, nullable=False)
+    email = db.Column(db.String(120), unique=True, nullable=False)
+    age = db.Column(db.Integer)
+    is_active = db.Column(db.Boolean, default=True)
+    bio = db.Column(db.Text)
+    details = db.Column(db.JSON, nullable=True)
+    profile_image = db.Column(db.LargeBinary)
+    created_at = db.Column(db.DateTime, default=db.func.now())
 
     def __repr__(self):
-        return f"{self.id}). Name : {self.userName}, userDescription: {self.userDescription}, userPNG: {self.userPNG}, userFollowers: {self.userFollowers}"
+        return f"Test({self.id}, {self.username}, {self.email}, {self.age}, {self.is_active}, {self.bio}, {self.profile_image}, {self.created_at})"
 ```
 
 ### Creating Tables
