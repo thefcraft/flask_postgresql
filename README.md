@@ -33,6 +33,20 @@ if __name__ == "__main__":
     if RESET:
         db.create_all() # with app.app_context(): db.create_all() will also work
 ```
+### array support
+```python
+class Test(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    data = db.Column(db.Integer, array=True)
+
+    def __repr__(self):
+        return f"Test({self.id}, {self.data})"
+db.create_all()
+p = Test(data = [21, 24])
+db.session.add(p)
+db.session.commit()
+Test.query.get(id=1).data #-> [21, 24]    
+```
 
 ### Initializing the Database Connection
 
