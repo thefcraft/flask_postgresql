@@ -17,6 +17,13 @@ class DBSession:
             print("Error:", e)
     def commit(self): self.conn.commit()
     
+class BaseList:
+    def __init__(self, data:list) -> None:
+        self.data = data
+    def __len__(self): return len(self.data)
+    def __getitem__(self, idx): return self.data[idx]
+    def first(self): return self.data[0]
+    
 class Query:
     def __init__(self, cls, conn, attributes:list):
         self.table_name = cls.__name__
@@ -40,6 +47,14 @@ class Query:
             atr:row[i].tobytes() if isinstance(row[i], memoryview) else row[i] for i,atr in enumerate(self.attributes) # TODO 
         })
     # TODO
+    def filter_by(self, **kwargs):
+        cur = self.conn.cursor()
+        cur.execute(f"""SELECT * FROM users WHERE {' and '.join([f"{k} = '{v}'" for k,v in kwargs.items()])};""")
+        rows = cur.fetchall()
+        cur.close()
+        return BaseList([self.cls(**{
+            atr:row[i].tobytes() if isinstance(row[i], memoryview) else row[i] for i,atr in enumerate(self.attributes)
+        }) for row in rows])
     # def filter_by()
     # def order_by
     # def limit
@@ -109,7 +124,7 @@ class PostgreSQL:
             
         selfRoot.Model = BaseModel
         selfRoot.func = BaseFunc
-    
+    # TODO Array support to flask_postgresql
     def Column(self, data_type, primary_key=False, nullable=True, unique=False, default=None, array=False):
         return (data_type.__name__,primary_key,nullable,unique,default, array)
     def Integer(self): ...
