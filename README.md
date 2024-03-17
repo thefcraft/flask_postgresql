@@ -4,6 +4,9 @@ The Flask PostgreSQL library provides a convenient interface for integrating Pos
 
 ## Installation
 
+DEMO: i made [mediumClone](https://github.com/thefcraft/mediumClone/) using both Flask-SQLAlchemy and flask_postgresql with change of two three line of code.
+In this demo i use flask_login library which is also supported by my flask_postgresql library.
+
 You can install the Flask PostgreSQL library using pip:
 
 ```
