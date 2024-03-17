@@ -11,19 +11,25 @@ pip install flask-pgsql --user
 ```
 
 ## TODO
-Class properties are deprecated in Python 3.11 and will not be supported in Python 3.13
-```python
-class BaseModel:
+- add support flask_login library ✅
+    ```python
+    from flask_login import UserMixin, LoginManager, ...
+    class USERS(UserMixin, db.Model): ...
+    ```
+- use metaclass because Class properties are deprecated in Python 3.11 and will not be supported in Python 3.13
+    ```python
+    class BaseModel:
     ...
     @classmethod
     @property # Class properties are deprecated in Python 3.11 and will not be supported in Python 3.13
     def query(cls): ...
-```
-Do somethig like this.
-```python
-class MetaModel(type): ...
-class BaseModel(metaclass=MetaModel): ...
-```
+    ```
+    Do somethig like this.
+  
+    ```python
+    class MetaModel(type): ...
+    class BaseModel(metaclass=MetaModel): ...
+    ```
 
 ## Usage
 
