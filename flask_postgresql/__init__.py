@@ -46,6 +46,14 @@ class Query:
         return self.cls(**{
             atr:row[i].tobytes() if isinstance(row[i], memoryview) else row[i] for i,atr in enumerate(self.attributes) # TODO 
         })
+    def random(self, length):
+        cur = self.conn.cursor()
+        cur.execute(f"SELECT * FROM {self.table_name} ORDER BY RANDOM() LIMIT {length};")
+        rows = cur.fetchall()
+        cur.close()
+        return [self.cls(**{
+            atr:row[i].tobytes() if isinstance(row[i], memoryview) else row[i] for i,atr in enumerate(self.attributes)
+        }) for row in rows]
     # TODO
     def filter_by(self, **kwargs):
         cur = self.conn.cursor()
